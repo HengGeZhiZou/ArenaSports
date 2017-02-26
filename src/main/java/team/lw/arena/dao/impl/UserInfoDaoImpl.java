@@ -33,6 +33,16 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
 
     @Override
     @SuppressWarnings("unchecked")
+    public UserLogin getUserLogin(String email) {
+        String hql="from UserLogin where email=?";
+        List<UserLogin> list = (List<UserLogin>) this.getHibernateTemplate().find(hql, email);
+        if (list != null) return list.get(0);
+        return null;
+
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public String getMaxId() {
         String hql = "select max(id) from UserLogin ";
         List<String> list = (List<String>) this.getHibernateTemplate().find(hql);
@@ -68,5 +78,10 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
         return userInfo.getId();
     }
 
-
+    @Override
+    public void addToken(UserLogin userLogin) {
+        UserLogin user=this.getHibernateTemplate().get(UserLogin.class,userLogin.getId());
+        user.setToken(userLogin.getToken());
+        this.getHibernateTemplate().update(user);
+    }
 }

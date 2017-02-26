@@ -8,9 +8,11 @@ import org.junit.runner.RunWith;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import team.lw.arena.dao.GameDao;
 import team.lw.arena.dao.TestDao;
 import team.lw.arena.entity.*;
 import team.lw.arena.exception.ServiceException;
+import team.lw.arena.service.GameService;
 import team.lw.arena.service.PositionService;
 import team.lw.arena.service.RecordService;
 import team.lw.arena.service.UserInfoService;
@@ -18,6 +20,7 @@ import team.lw.arena.service.impl.TestServiceImpl;
 import team.lw.arena.util.CreateSafeCode;
 import team.lw.arena.util.GetPositionUtil;
 import team.lw.arena.util.SendMailUtil;
+import team.lw.arena.util.Token;
 
 
 import javax.annotation.Resource;
@@ -39,6 +42,19 @@ public class Test {
 
     @Resource(name = "positionServiceImpl")
     private PositionService positionService;
+
+    @Resource(name="gameServiceImpl")
+    private GameService gameService;
+
+    @org.junit.Test
+    public void updateToken(){
+        userInfoService.addToken("huge");
+    }
+
+    @org.junit.Test
+    public void deleteToken(){
+        userInfoService.deleteToken("huge");
+    }
 
     @org.junit.Test
     public void testLogin() throws Exception {
@@ -133,8 +149,8 @@ public class Test {
     @org.junit.Test
     public void testUpdatePassword() {
         UserLogin userLogin = new UserLogin();
-        userLogin.setId("1701007001");
-        userLogin.setPassword("lolo");
+        userLogin.setId("1702000001");
+        userLogin.setPassword("mai");
         try {
             userInfoService.updatePasswordService(userLogin);
         } catch (ServiceException e) {
@@ -183,9 +199,18 @@ public class Test {
     }
 
     @org.junit.Test
+    public void testGetuser(){
+        try {
+            System.out.println(userInfoService.getUserLogin("sdass"));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @org.junit.Test
     public void testRecord() {
 
-        List<Record> lists = recordService.findByPage(1);
+        List<Record> lists = recordService.findByPage(0);
         for (Record record : lists) {
             System.out.println(record.toString());
         }
@@ -226,4 +251,17 @@ public class Test {
 
     }
 
+    @org.junit.Test
+    public void createRoom(){
+            System.out.println(gameService.CreateHouse("2222"));
+    }
+
+    @org.junit.Test
+    public void inviteOthers(){
+        SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
+        sixPeopleRoom.setCharacter01("1701000005");
+        sixPeopleRoom.setCharacter02("1702000001");
+        sixPeopleRoom.setCharacter03("1701000002");
+        System.out.println(gameService.inviteOthers(sixPeopleRoom));
+    }
 }

@@ -34,8 +34,8 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 
 
     @Override
-    public void update(Object enetity) {
-        getHibernateTemplate().update(enetity);
+    public void update(Object entity) {
+        this.getHibernateTemplate().update(entity);
     }
 
     @Override

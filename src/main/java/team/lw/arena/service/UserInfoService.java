@@ -9,6 +9,9 @@ import java.io.Serializable;
 
 
 public interface UserInfoService {
+
+        UserLogin getUserLogin(String email) throws ServiceException;
+
         String loginService(UserLogin userLogin) throws ServiceException;  //检查登录  返回id
 
         boolean checkEmailExistService(String email) throws ServiceException;  //检查邮箱是否存在
@@ -23,5 +26,7 @@ public interface UserInfoService {
 
         String updateUserInfoService(UserInfo userInfo);//修改信息 返回id
 
+        String addToken(String email);//用户登陆时增加token
 
+        void deleteToken(String email);//用户退出时删除token
 }

@@ -10,6 +10,8 @@ import java.io.Serializable;
 
 public interface UserInfoDao extends BaseDao<UserLogin> {
 
+    UserLogin getUserLogin(String email);
+
     String getMaxId(); //获取当前用户中最大ID 返回id
 
     boolean checkEmailExist(String email);  //检查用户邮箱地址是否存在
@@ -24,5 +26,5 @@ public interface UserInfoDao extends BaseDao<UserLogin> {
 
     String updateUserInfo(UserInfo userInfo); //用户修改信息  返回id
 
-
+    void  addToken(UserLogin userLogin);  //为用户添加token
 }

@@ -28,7 +28,6 @@ public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao {
         DetachedCriteria detachedCriteria= DetachedCriteria.forClass(Record.class);
         detachedCriteria.add(Restrictions.eq("id","1701000001"));
         detachedCriteria.add(Restrictions.eq("type","basketball"));
-//        detachedCriteria.add(Restrictions.between("count",1,2));
         return (List<Record>) this.getHibernateTemplate().findByCriteria(detachedCriteria,begin,pageSize);
     }
 }

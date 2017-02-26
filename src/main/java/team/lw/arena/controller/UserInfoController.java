@@ -1,5 +1,9 @@
 package team.lw.arena.controller;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import team.lw.arena.entity.ReturnInfo;
@@ -8,7 +12,9 @@ import team.lw.arena.entity.UserLogin;
 import team.lw.arena.exception.ServiceException;
 import team.lw.arena.service.UserInfoService;
 import team.lw.arena.util.CreateSafeCode;
+import team.lw.arena.util.ResultCode;
 import team.lw.arena.util.SendMailUtil;
+import team.lw.arena.util.Token;
 
 import javax.annotation.Resource;
 
@@ -25,6 +31,14 @@ public class UserInfoController {
     private ReturnInfo returnInfo = new ReturnInfo();
 
     @SuppressWarnings("unchecked")
+    @RequestMapping(value = "return")
+    @ResponseBody
+    public ReturnInfo returnI(){
+        returnInfo.setInfo(ResultCode.SEND_FAIL,"你还未登录");
+        return returnInfo;
+    }
+
+    @SuppressWarnings("unchecked")
     @RequestMapping(value = "registerUser", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public ReturnInfo registerUser(@RequestBody UserLogin userLogin) throws ServiceException {
@@ -39,9 +53,29 @@ public class UserInfoController {
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "loginCheck", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ReturnInfo loginCheck(@RequestBody UserLogin userLogin) throws ServiceException {
-        returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, userInfoService.loginService(userLogin));
+    public ReturnInfo loginCheck(@RequestBody UserLogin userLogin) throws Exception {
+
+        Subject currentUser = SecurityUtils.getSubject();
+        if (!currentUser.isAuthenticated()) {
+            UsernamePasswordToken token = new UsernamePasswordToken(userLogin.getEmail(), userLogin.getPassword());
+            token.setRememberMe(true);
+            currentUser.login(token);
+            String UserToken= userInfoService.addToken(userLogin.getEmail());
+            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG,UserToken);
+        }
         return returnInfo;
+    }
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "logout",method = RequestMethod.POST,produces = "application/json")
+    @ResponseBody
+    public ReturnInfo logout(@RequestBody UserLogin userLogin){
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()) {
+            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
+            userInfoService.deleteToken(userLogin.getEmail());
+            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG);
+        }
+        return  returnInfo;
     }
 
     @SuppressWarnings("unchecked")

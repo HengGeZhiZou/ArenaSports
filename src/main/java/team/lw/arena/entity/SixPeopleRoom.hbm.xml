@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="team.lw.arena.entity.SixPeopleRoom" table="six_people_room" schema="project_db">
+        <id name="character01" column="_character_01_id"/>
+        <property name="character02" column="_character_02_id"/>
+        <property name="character03" column="_character_03_id"/>
+        <property name="character04" column="_character_04_id"/>
+        <property name="character05" column="_character_05_id"/>
+        <property name="character06" column="_character_06_id"/>
+    </class>
+</hibernate-mapping>

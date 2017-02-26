@@ -13,6 +13,15 @@ public class UserLogin implements Serializable {
     private String password;
     private Timestamp addTime;
     private Timestamp lastTime;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @Id
     @Column(name = "_id")

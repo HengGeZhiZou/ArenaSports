@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="realm" ref="userRealm"/>
+    </bean>
+
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+
+    </bean>
+    <bean id="userRealm" class="team.lw.arena.shiro.UserRealm">
+    </bean>
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+          depends-on="lifecycleBeanPostProcessor"/>
+    <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+        <property name="securityManager" ref="securityManager"/>
+    </bean>
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/Arena/userInfo/return.do"/>
+        <!--<property name="successUrl" value="/index.jsp"/>-->
+        <!--<property name="unauthorizedUrl" value="/unauthorized.jsp"/>-->
+        <property name="filterChainDefinitions">
+            <value>
+                /Arena/userInfo/return.do=anon
+                /Arena/userInfo/loginCheck.do=anon
+                /Arena/userInfo/logout.do=anon
+                # everything else requires authentication:
+                /** = authc
+            </value>
+        </property>
+    </bean>
+</beans>

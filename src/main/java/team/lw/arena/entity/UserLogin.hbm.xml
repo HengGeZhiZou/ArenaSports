@@ -10,5 +10,6 @@
         <property name="password" column="_password"/>
         <property name="addTime" column="add_time"/>
         <property name="lastTime" column="last_time"/>
+        <property name="token" column="token"/>
     </class>
 </hibernate-mapping>

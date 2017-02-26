@@ -11,6 +11,7 @@ import team.lw.arena.entity.UserLogin;
 import team.lw.arena.exception.ServiceException;
 import team.lw.arena.service.UserInfoService;
 import team.lw.arena.util.CreateNewUserId;
+import team.lw.arena.util.Token;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -25,7 +26,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     private UserInfoDao userInfoDao;
     private PositionDao positionDao;
 
-   @Resource(name = "userInfoDaoImpl")
+    @Resource(name = "userInfoDaoImpl")
     public void setUserInfoDao(UserInfoDao userInfoDao) {
         this.userInfoDao = userInfoDao;
     }
@@ -33,6 +34,15 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Resource(name = "positionDaoImpl")
     public void setPositionDao(PositionDao positionDao) {
         this.positionDao = positionDao;
+    }
+
+    @Override
+    public UserLogin getUserLogin(String email) throws ServiceException {
+        try {
+            return userInfoDao.getUserLogin(email);
+        } catch (Exception e) {
+            throw new ServiceException("账号不存在");
+        }
     }
 
     @Override
@@ -51,18 +61,18 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             return userInfoDao.checkEmailExist(email);
         } catch (Exception e) {
-           throw new ServiceException("邮箱已经存在");
+            throw new ServiceException("邮箱已经存在");
         }
     }
 
     @Override
-    public String registerService(UserLogin userLogin){
-            userLogin.setId(CreateNewUserId.getNewUserId(userInfoDao.getMaxId()));
-            userLogin.setLastTime(new java.sql.Timestamp(System.currentTimeMillis()));
-            userLogin.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
-            userInfoDao.save(userLogin);
-            positionDao.save(new MobileUser(userLogin.getId(),new BigDecimal(0),new BigDecimal(0)));
-            return userLogin.getId();
+    public String registerService(UserLogin userLogin) {
+        userLogin.setId(CreateNewUserId.getNewUserId(userInfoDao.getMaxId()));
+        userLogin.setLastTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        userLogin.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        userInfoDao.save(userLogin);
+        positionDao.save(new MobileUser(userLogin.getId(), new BigDecimal(0), new BigDecimal(0)));
+        return userLogin.getId();
     }
 
     @Override
@@ -79,26 +89,40 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo findUserInfo(Serializable id) throws ServiceException {
-        try{
+        try {
             return userInfoDao.findUserInfo(id);
-        }
-        catch (Exception e){
-         throw new ServiceException("传入id不存在");
+        } catch (Exception e) {
+            throw new ServiceException("传入id不存在");
         }
     }
 
     @Override
-    public String addUserInfoService(UserInfo userInfo){
-            userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
-            userInfoDao.addUserInfo(userInfo);
-            return userInfo.getId();
+    public String addUserInfoService(UserInfo userInfo) {
+        userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        userInfoDao.addUserInfo(userInfo);
+        return userInfo.getId();
     }
 
     @Override
-    public String updateUserInfoService(UserInfo userInfo){
-            userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
-            userInfoDao.updateUserInfo(userInfo);
-            return userInfo.getId();
+    public String updateUserInfoService(UserInfo userInfo) {
+        userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        userInfoDao.updateUserInfo(userInfo);
+        return userInfo.getId();
+    }
+
+    @Override
+    public String addToken(String email) {
+        UserLogin userLogin = userInfoDao.getUserLogin(email);
+        userLogin.setToken(Token.getToken(userLogin.getId()));
+        userInfoDao.addToken(userLogin);
+        return userLogin.getToken();
+    }
+
+    @Override
+    public void deleteToken(String email) {
+        UserLogin userLogin = userInfoDao.getUserLogin(email);
+        userLogin.setToken("");
+        userInfoDao.addToken(userLogin);
     }
 
 }
