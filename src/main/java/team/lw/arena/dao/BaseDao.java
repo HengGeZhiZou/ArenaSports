@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface BaseDao<T> {
 
+     void merge(T entity);
+
      void save(T entity);
 
      void update(T entity);

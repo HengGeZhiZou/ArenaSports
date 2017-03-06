@@ -39,6 +39,11 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
     }
 
     @Override
+    public void merge(T entity) {
+        this.getHibernateTemplate().merge(entity);
+    }
+
+    @Override
     public void delete(Serializable id) {
         getHibernateTemplate().delete(findObjectById(id));
     }

@@ -5,10 +5,15 @@
 <hibernate-mapping>
 
     <class name="team.lw.arena.entity.Record" table="record" schema="project_db">
-        <id name="count" column="_count"/>
-        <property name="id" column="_id"/>
+        <id name="raceNumber" column="_race_number"/>
         <property name="date" column="_date"/>
         <property name="position" column="_position"/>
         <property name="type" column="_type"/>
+        <property name="id01" column="_id_01"/>
+        <property name="id06" column="_id_06"/>
+        <property name="id02" column="_id_02"/>
+        <property name="id03" column="_id_03"/>
+        <property name="id04" column="_id_04"/>
+        <property name="id05" column="_id_05"/>
     </class>
 </hibernate-mapping>

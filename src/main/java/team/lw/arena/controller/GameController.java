@@ -49,7 +49,12 @@ public class GameController {
     @SuppressWarnings("unchecked")
     @RequestMapping(value = "startGame",method = RequestMethod.POST,produces = "application/json")
     @ResponseBody
-    public ReturnInfo startGame(@RequestBody SixPeopleRoom sixPeopleRoom){
+    public ReturnInfo startGame(@RequestBody SixPeopleRoom sixPeopleRoom) throws ServiceException {
+        try{
+
+        }catch (Exception e){
+            throw  new ServiceException("开始比赛失败");
+        }
     return  returnInfo;
     }
 }

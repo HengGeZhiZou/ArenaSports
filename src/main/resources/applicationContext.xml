@@ -25,6 +25,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update </prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/project_db</prop>
                 <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
@@ -42,6 +43,7 @@
                 <value>team/lw/arena/entity/Record.hbm.xml</value>
                 <value>team/lw/arena/entity/MobileUser.hbm.xml</value>
                 <value>team/lw/arena/entity/SixPeopleRoom.hbm.xml</value>
+                <value>team/lw/arena/entity/Record.hbm.xml</value>
             </list>
         </property>
         <!--配置映射文件-->

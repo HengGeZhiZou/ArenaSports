@@ -259,9 +259,26 @@ public class Test {
     @org.junit.Test
     public void inviteOthers(){
         SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
-        sixPeopleRoom.setCharacter01("1701000005");
+        sixPeopleRoom.setCharacter01("1701000002");
         sixPeopleRoom.setCharacter02("1702000001");
-        sixPeopleRoom.setCharacter03("1701000002");
+        sixPeopleRoom.setCharacter03("1701000004");
+        sixPeopleRoom.setCharacter04("1701000003");
         System.out.println(gameService.inviteOthers(sixPeopleRoom));
+    }
+
+    @org.junit.Test
+    public void startGame(){
+        SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
+        sixPeopleRoom.setCharacter01("1702000001");
+        sixPeopleRoom.setCharacter02("1702000002");
+        sixPeopleRoom.setCharacter03("1702000003");
+        sixPeopleRoom.setCharacter04("1702000004");
+        sixPeopleRoom.setCharacter05("1702000005");
+        sixPeopleRoom.setCharacter06("1702000006");
+        try {
+            recordService.addSixRoomRecord(sixPeopleRoom);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 }

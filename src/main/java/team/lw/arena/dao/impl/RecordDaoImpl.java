@@ -30,4 +30,16 @@ public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao {
         detachedCriteria.add(Restrictions.eq("type","basketball"));
         return (List<Record>) this.getHibernateTemplate().findByCriteria(detachedCriteria,begin,pageSize);
     }
+
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public String findUserMaxRecord(String uid) {
+        String hql="select max(raceNumber) from Record where id=?";
+        List<String> list= (List<String>) this.getHibernateTemplate().find(hql,uid);
+        if (list.get(0)!=null) return list.get(0);
+        return uid+"00000" ;
+    }
+
+
 }

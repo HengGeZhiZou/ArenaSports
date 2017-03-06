@@ -11,5 +11,5 @@ public interface RecordDao extends BaseDao<Record> {
 
     List<Record> findByPage(int begin, int end);  //°´ÕÕÒ³Âë²éÕÒ¼ÇÂ¼
 
-
+    String findUserMaxRecord(String uid);
 }

@@ -1,6 +1,8 @@
 package team.lw.arena.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/2/23.
@@ -14,6 +16,19 @@ public class SixPeopleRoom {
     private String character04;
     private String character05;
     private String character06;
+
+    public SixPeopleRoom(String character01, String character02, String character03, String character04, String character05, String character06) {
+        this.character01 = character01;
+        this.character02 = character02;
+        this.character03 = character03;
+        this.character04 = character04;
+        this.character05 = character05;
+        this.character06 = character06;
+    }
+
+    public SixPeopleRoom() {
+    }
+
 
     @Id
     @Column(name = "_character_01_id")
