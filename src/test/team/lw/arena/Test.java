@@ -9,22 +9,18 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import team.lw.arena.dao.GameDao;
+import team.lw.arena.dao.StateDao;
 import team.lw.arena.dao.TestDao;
 import team.lw.arena.entity.*;
 import team.lw.arena.exception.ServiceException;
-import team.lw.arena.service.GameService;
-import team.lw.arena.service.PositionService;
-import team.lw.arena.service.RecordService;
-import team.lw.arena.service.UserInfoService;
+import team.lw.arena.service.*;
 import team.lw.arena.service.impl.TestServiceImpl;
-import team.lw.arena.util.CreateSafeCode;
-import team.lw.arena.util.GetPositionUtil;
-import team.lw.arena.util.SendMailUtil;
-import team.lw.arena.util.Token;
+import team.lw.arena.util.*;
 
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -45,6 +41,9 @@ public class Test {
 
     @Resource(name="gameServiceImpl")
     private GameService gameService;
+
+    @Resource(name = "stateServiceImpl")
+    private StateService stateService;
 
     @org.junit.Test
     public void updateToken(){
@@ -193,10 +192,10 @@ public class Test {
         }
     }
 
-    @org.junit.Test
-    public void testRecordCount() {
-        System.out.println(recordService.getCount());
-    }
+//    @org.junit.Test
+//    public void testRecordCount() {
+//        System.out.println(recordService.getCount());
+//    }
 
     @org.junit.Test
     public void testGetuser(){
@@ -210,7 +209,7 @@ public class Test {
     @org.junit.Test
     public void testRecord() {
 
-        List<Record> lists = recordService.findByPage(0);
+        List<Record> lists = recordService.findByPage(0,"dsads");
         for (Record record : lists) {
             System.out.println(record.toString());
         }
@@ -269,8 +268,8 @@ public class Test {
     @org.junit.Test
     public void startGame(){
         SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
-        sixPeopleRoom.setCharacter01("1702000001");
-        sixPeopleRoom.setCharacter02("1702000002");
+        sixPeopleRoom.setCharacter01("1702000002");
+        sixPeopleRoom.setCharacter02("1702000001");
         sixPeopleRoom.setCharacter03("1702000003");
         sixPeopleRoom.setCharacter04("1702000004");
         sixPeopleRoom.setCharacter05("1702000005");
@@ -280,5 +279,20 @@ public class Test {
         } catch (ServiceException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @org.junit.Test
+    public void addState() {
+//        System.out.println(CreateNewUserId.crateStateId("17010000010001"));
+        State state=new State();
+        state.setId("1701000002");
+        state.setText("今天天气真好，贼鸡巴开心");
+        state.setDate(new Timestamp(System.currentTimeMillis()));
+        state.setPhoto("http://file.koolearn.com/20170307/14888803845500.jpg");
+        state.setPosition("中国");
+        state.setLike(10);
+        stateService.addState(state);
+
     }
 }

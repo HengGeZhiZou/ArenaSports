@@ -26,18 +26,16 @@ public class CreateNewUserId {
         }
     }
 
-    public static String addRaceNum(String raceNum) {
-        System.out.println(raceNum);
-        String first = raceNum.substring(0, 10);
-        String count = raceNum.substring(10);
+    public static String crateStateId(String stateId) {
+        String first = stateId.substring(0, 10);
+        String count = stateId.substring(10);
         int i = Integer.parseInt(count);
         i++;
         String nid=String.valueOf(i);
-        i=5-nid.length();
+        i=4-nid.length();
         for (int j=0;j<i;j++){
             nid="0"+nid;
         }
-        System.out.println(first+nid);
         return first+nid;
     }
 }

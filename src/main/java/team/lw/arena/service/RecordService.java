@@ -7,9 +7,10 @@ import team.lw.arena.exception.ServiceException;
 import java.util.List;
 
 public interface RecordService {
-    List<Record> findByPage(Integer currPage);
 
-    int getCount();
+    List<Record> findByPage(Integer currPage,String uid);
+
 
     boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom) throws ServiceException;
+
 }

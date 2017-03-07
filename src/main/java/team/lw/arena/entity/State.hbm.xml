@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="team.lw.arena.entity.State" table="state" schema="project_db">
+        <id name="sId" column="_s_id"/>
+        <property name="id" column="_id"/>
+        <property name="text" column="_text"/>
+        <property name="date" column="_date"/>
+        <property name="photo" column="_photo"/>
+        <property name="position" column="_position"/>
+        <property name="like" column="_like"/>
+        <property name="commentsId" column="_comments_id"/>
+    </class>
+</hibernate-mapping>

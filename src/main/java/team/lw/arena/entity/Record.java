@@ -11,10 +11,10 @@ import java.sql.Timestamp;
  */
 @Entity
 public class Record {
+    private int raceNumber;
     private Timestamp date;
     private String position;
     private String type;
-    private String raceNumber;
     private String id01;
     private String id06;
     private String id02;
@@ -22,7 +22,7 @@ public class Record {
     private String id04;
     private String id05;
 
-    public Record(Timestamp date, String position, String type, String raceNumber, String id01, String id02, String id03, String id04, String id05, String id06) {
+    public Record(Timestamp date, String position, String type, String id01, String id02, String id03, String id04, String id05, String id06) {
         this.date = date;
         this.position = position;
         this.type = type;
@@ -33,6 +33,9 @@ public class Record {
         this.id03 = id03;
         this.id04 = id04;
         this.id05 = id05;
+    }
+
+    public Record() {
     }
 
     @Basic
@@ -67,11 +70,11 @@ public class Record {
 
     @Id
     @Column(name = "_race_number")
-    public String getRaceNumber() {
+    public int getRaceNumber() {
         return raceNumber;
     }
 
-    public void setRaceNumber(String raceNumber) {
+    public void setRaceNumber(int raceNumber) {
         this.raceNumber = raceNumber;
     }
 
@@ -135,39 +138,20 @@ public class Record {
         this.id05 = id05;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Record record = (Record) o;
-
-        if (date != null ? !date.equals(record.date) : record.date != null) return false;
-        if (position != null ? !position.equals(record.position) : record.position != null) return false;
-        if (type != null ? !type.equals(record.type) : record.type != null) return false;
-        if (raceNumber != null ? !raceNumber.equals(record.raceNumber) : record.raceNumber != null) return false;
-        if (id01 != null ? !id01.equals(record.id01) : record.id01 != null) return false;
-        if (id06 != null ? !id06.equals(record.id06) : record.id06 != null) return false;
-        if (id02 != null ? !id02.equals(record.id02) : record.id02 != null) return false;
-        if (id03 != null ? !id03.equals(record.id03) : record.id03 != null) return false;
-        if (id04 != null ? !id04.equals(record.id04) : record.id04 != null) return false;
-        if (id05 != null ? !id05.equals(record.id05) : record.id05 != null) return false;
-
-        return true;
-    }
 
     @Override
-    public int hashCode() {
-        int result = date != null ? date.hashCode() : 0;
-        result = 31 * result + (position != null ? position.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (raceNumber != null ? raceNumber.hashCode() : 0);
-        result = 31 * result + (id01 != null ? id01.hashCode() : 0);
-        result = 31 * result + (id06 != null ? id06.hashCode() : 0);
-        result = 31 * result + (id02 != null ? id02.hashCode() : 0);
-        result = 31 * result + (id03 != null ? id03.hashCode() : 0);
-        result = 31 * result + (id04 != null ? id04.hashCode() : 0);
-        result = 31 * result + (id05 != null ? id05.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "Record{" +
+                "date=" + date +
+                ", position='" + position + '\'' +
+                ", type='" + type + '\'' +
+                ", raceNumber='" + raceNumber + '\'' +
+                ", id01='" + id01 + '\'' +
+                ", id06='" + id06 + '\'' +
+                ", id02='" + id02 + '\'' +
+                ", id03='" + id03 + '\'' +
+                ", id04='" + id04 + '\'' +
+                ", id05='" + id05 + '\'' +
+                '}';
     }
 }
