@@ -1,9 +1,13 @@
 package team.lw.arena.dao.impl;
 
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import team.lw.arena.dao.StateDao;
+import team.lw.arena.entity.Comment;
 import team.lw.arena.entity.State;
 
 import java.util.List;
@@ -19,5 +23,19 @@ public class StateDaoImpl extends BaseDaoImpl<State> implements StateDao{
         List<String> list= (List<String>) this.getHibernateTemplate().find(hql,uid);
         if (list.get(0) != null) return list.get(0);
         return uid+"0000";
+    }
+
+    @Override
+    public void saveComment(Comment comment) {
+        this.getHibernateTemplate().save(comment);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<State> findByPageState(int begin, int pageSize, String uid) {
+        DetachedCriteria detachedCriteria=DetachedCriteria.forClass(State.class);
+        detachedCriteria.add(Restrictions.eq("id",uid))
+        .addOrder(Order.desc("sId"));
+        return  (List<State>) this.getHibernateTemplate().findByCriteria(detachedCriteria,begin,pageSize);
     }
 }

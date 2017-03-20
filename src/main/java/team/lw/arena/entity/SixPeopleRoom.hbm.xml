@@ -11,5 +11,6 @@
         <property name="character04" column="_character_04_id"/>
         <property name="character05" column="_character_05_id"/>
         <property name="character06" column="_character_06_id"/>
+        <property name="isFull" column="_isFull"/>
     </class>
 </hibernate-mapping>

@@ -209,7 +209,7 @@ public class Test {
     @org.junit.Test
     public void testRecord() {
 
-        List<Record> lists = recordService.findByPage(0,"dsads");
+        List<Record> lists = recordService.findByPage(2,"1702000001");
         for (Record record : lists) {
             System.out.println(record.toString());
         }
@@ -252,30 +252,30 @@ public class Test {
 
     @org.junit.Test
     public void createRoom(){
-            System.out.println(gameService.CreateHouse("2222"));
+            System.out.println(gameService.CreateHouse("1701000004"));
     }
 
     @org.junit.Test
     public void inviteOthers(){
         SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
-        sixPeopleRoom.setCharacter01("1701000002");
+        sixPeopleRoom.setCharacter01("1701000004");
         sixPeopleRoom.setCharacter02("1702000001");
         sixPeopleRoom.setCharacter03("1701000004");
         sixPeopleRoom.setCharacter04("1701000003");
+        sixPeopleRoom.setCharacter05("1702000004");
+        sixPeopleRoom.setCharacter06("1702000003");
         System.out.println(gameService.inviteOthers(sixPeopleRoom));
     }
 
     @org.junit.Test
+    public void overGame(){
+        gameService.endGame("1701000004");
+    }
+
+    @org.junit.Test
     public void startGame(){
-        SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
-        sixPeopleRoom.setCharacter01("1702000002");
-        sixPeopleRoom.setCharacter02("1702000001");
-        sixPeopleRoom.setCharacter03("1702000003");
-        sixPeopleRoom.setCharacter04("1702000004");
-        sixPeopleRoom.setCharacter05("1702000005");
-        sixPeopleRoom.setCharacter06("1702000006");
         try {
-            recordService.addSixRoomRecord(sixPeopleRoom);
+            gameService.startGame("1701000001");
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -286,13 +286,43 @@ public class Test {
     public void addState() {
 //        System.out.println(CreateNewUserId.crateStateId("17010000010001"));
         State state=new State();
-        state.setId("1701000002");
-        state.setText("今天天气真好，贼鸡巴开心");
-        state.setDate(new Timestamp(System.currentTimeMillis()));
-        state.setPhoto("http://file.koolearn.com/20170307/14888803845500.jpg");
-        state.setPosition("中国");
-        state.setLike(10);
-        stateService.addState(state);
+        state.setId("1701000001");
+        state.setText("今天天气真好，开心");
+//        state.setDate(new Timestamp(System.currentTimeMillis()));
+//        state.setPhoto("http://file.koolearn.com/20170307/14888803845500.jpg");
+//        state.setPosition("中国");
+//        state.setLike(10);
+        System.out.println(stateService.addState(state));
 
+    }
+
+    @org.junit.Test
+    public void addLikes(){
+        stateService.addLike("17010000020001");
+    }
+
+
+    @org.junit.Test
+    public void addComment(){
+        Comment comment=new Comment();
+        comment.setCommentsId("17010000020002");
+//        comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
+        comment.setContent("你真是");
+        comment.setReviewerId("1701000005");
+        stateService.addComment(comment);
+    }
+
+    @org.junit.Test
+    public void deleteState(){
+        stateService.deleteState("17010000010002");
+    }
+
+
+    @org.junit.Test
+    public void findAllState(){
+        List<State> states=stateService.findAllState(2,"1701000002");
+        for(State state:states){
+            System.out.println(state);
+        }
     }
 }

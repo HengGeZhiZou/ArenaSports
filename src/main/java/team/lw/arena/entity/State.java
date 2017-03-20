@@ -131,4 +131,18 @@ public class State {
         result = 31 * result + (commentsId != null ? commentsId.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "State{" +
+                "sId='" + sId + '\'' +
+                ", id='" + id + '\'' +
+                ", text='" + text + '\'' +
+                ", date=" + date +
+                ", photo='" + photo + '\'' +
+                ", position='" + position + '\'' +
+                ", like=" + like +
+                ", commentsId='" + commentsId + '\'' +
+                '}';
+    }
 }

@@ -11,6 +11,6 @@ public interface RecordService {
     List<Record> findByPage(Integer currPage,String uid);
 
 
-    boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom) throws ServiceException;
+    boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom);
 
 }

@@ -16,6 +16,7 @@ public class SixPeopleRoom {
     private String character04;
     private String character05;
     private String character06;
+    private int isFull;
 
     public SixPeopleRoom(String character01, String character02, String character03, String character04, String character05, String character06) {
         this.character01 = character01;
@@ -88,6 +89,16 @@ public class SixPeopleRoom {
 
     public void setCharacter06(String character06) {
         this.character06 = character06;
+    }
+
+    @Basic
+    @Column(name = "_isFull")
+    public int getIsFull() {
+        return isFull;
+    }
+
+    public void setIsFull(int isFull) {
+        this.isFull = isFull;
     }
 
     @Override

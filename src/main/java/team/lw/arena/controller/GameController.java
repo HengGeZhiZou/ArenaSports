@@ -34,46 +34,53 @@ public class GameController {
             returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, gameService.CreateHouse(uid));
             return returnInfo;
         } catch (Exception e) {
-            throw new ServiceException("创建房间失败");
+            throw new ServiceException("你已经创建房间，请先退出房间");
         }
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "inviteOthers",method = RequestMethod.POST,produces = "application/json")
+    @RequestMapping(value = "inviteOthers", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
     public ReturnInfo inviteOthers(@RequestBody SixPeopleRoom sixPeopleRoom) throws ServiceException {
-        try{
-            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG,gameService.inviteOthers(sixPeopleRoom));
+        try {
+            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, gameService.inviteOthers(sixPeopleRoom));
             return returnInfo;
-        }catch (Exception e){
-            throw  new ServiceException("邀请玩家失败");
+        } catch (Exception e) {
+            throw new ServiceException("邀请玩家失败");
         }
-
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "startGame",method = RequestMethod.POST,produces = "application/json")
+    @RequestMapping(value = "startGame/{ownerID}",method = RequestMethod.GET,produces = "application/json")
     @ResponseBody
-    public ReturnInfo startGame(@RequestBody SixPeopleRoom sixPeopleRoom) throws ServiceException {
-        try{
-            if (recordService.addSixRoomRecord(sixPeopleRoom)){
-                returnInfo.setInfo(REQUEST_SUCCESS,REQUEST_SUCCESS_MSG,"比赛开始");
-            }
-        }catch (Exception e){
-            throw  new ServiceException("开始比赛失败");
-        }
-    return  returnInfo;
+    public ReturnInfo startGame(@PathVariable String ownerID)throws ServiceException{
+            gameService.startGame(ownerID);
+            returnInfo.setInfo(REQUEST_SUCCESS,REQUEST_SUCCESS_MSG);
+            return returnInfo;
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "findRecord/{uid}/{currPage}",method = RequestMethod.GET,produces = "application/json")
+    @RequestMapping(value = "endGame/{ownerID}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ReturnInfo findRecord(@PathVariable String uid,@PathVariable int currPage) throws ServiceException {
-        try{
-            returnInfo.setInfo(REQUEST_SUCCESS,REQUEST_SUCCESS_MSG,recordService.findByPage(currPage,uid));
-        }catch (Exception e){
+    public ReturnInfo endGame(@PathVariable String ownerID) throws ServiceException {
+        try {
+            gameService.endGame(ownerID);
+            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, "比赛结束");
+            return returnInfo;
+        } catch (Exception e) {
+            throw new ServiceException("结束比赛失败");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "findRecord/{uid}/{currPage}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public ReturnInfo findRecord(@PathVariable String uid, @PathVariable int currPage) throws ServiceException {
+        try {
+            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, recordService.findByPage(currPage, uid));
+            return returnInfo;
+        } catch (Exception e) {
             throw new ServiceException("查询战绩失败");
         }
-        return returnInfo;
     }
 }

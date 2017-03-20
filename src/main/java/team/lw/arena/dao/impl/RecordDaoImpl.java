@@ -26,7 +26,7 @@ public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao {
                 Restrictions.eq("id05", uid),
                 Restrictions.eq("id06", uid)
         ))
-                .addOrder(Order.asc("date"));
+                .addOrder(Order.desc("date"));
         return (List<Record>) this.getHibernateTemplate().findByCriteria(detachedCriteria, begin, pageSize);
     }
 

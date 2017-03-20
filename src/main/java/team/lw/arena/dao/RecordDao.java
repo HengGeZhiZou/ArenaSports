@@ -8,6 +8,6 @@ import java.util.List;
 public interface RecordDao extends BaseDao<Record> {
 
 
-    List<Record> findByPage(int begin, int end,String uid);  //按照页码查找记录
+    List<Record> findByPage(int begin, int pageSize,String uid);  //按照页码查找记录
 
 }

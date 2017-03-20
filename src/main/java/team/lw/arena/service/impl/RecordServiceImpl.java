@@ -4,6 +4,7 @@ package team.lw.arena.service.impl;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import team.lw.arena.dao.GameDao;
 import team.lw.arena.dao.RecordDao;
 import team.lw.arena.entity.Record;
 import team.lw.arena.entity.SixPeopleRoom;
@@ -40,9 +41,11 @@ public class RecordServiceImpl implements RecordService {
     }
 
 
+
+
     @Override
     public List<Record> findByPage(Integer currPage,String uid) {
-        List<Record> list = recordDao.findByPage(pageSize*currPage, pageSize,uid);
+        List<Record> list = recordDao.findByPage(pageSize*(currPage-1), pageSize,uid);
         return list;
     }
 }

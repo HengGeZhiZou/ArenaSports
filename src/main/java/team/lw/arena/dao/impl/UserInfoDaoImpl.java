@@ -38,7 +38,6 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
         List<UserLogin> list = (List<UserLogin>) this.getHibernateTemplate().find(hql, email);
         if (list != null) return list.get(0);
         return null;
-
     }
 
     @Override
