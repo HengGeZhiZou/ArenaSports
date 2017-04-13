@@ -17,7 +17,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
     @Override
     @SuppressWarnings("unchecked")
     public boolean checkEmailExist(String email) {
-        String hql = "from UserLogin where email=?";
+        String hql = " from UserLogin where email=? ";
         List<UserLogin> list = (List<UserLogin>) this.getHibernateTemplate().find(hql, email);
         return list.get(0).getId() != null;
     }
@@ -34,7 +34,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
     @Override
     @SuppressWarnings("unchecked")
     public UserLogin getUserLogin(String email) {
-        String hql="from UserLogin where email=?";
+        String hql = "from UserLogin where email=?";
         List<UserLogin> list = (List<UserLogin>) this.getHibernateTemplate().find(hql, email);
         if (list != null) return list.get(0);
         return null;
@@ -60,8 +60,8 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
 
     @Override
     @SuppressWarnings("unchecked")
-    public UserInfo findUserInfo(Serializable  id) {
-        return this.getHibernateTemplate().get(UserInfo.class,id);
+    public UserInfo findUserInfo(Serializable id) {
+        return this.getHibernateTemplate().get(UserInfo.class, id);
     }
 
 
@@ -79,7 +79,7 @@ public class UserInfoDaoImpl extends BaseDaoImpl<UserLogin> implements UserInfoD
 
     @Override
     public void addToken(UserLogin userLogin) {
-        UserLogin user=this.getHibernateTemplate().get(UserLogin.class,userLogin.getId());
+        UserLogin user = this.getHibernateTemplate().get(UserLogin.class, userLogin.getId());
         user.setToken(userLogin.getToken());
         this.getHibernateTemplate().update(user);
     }

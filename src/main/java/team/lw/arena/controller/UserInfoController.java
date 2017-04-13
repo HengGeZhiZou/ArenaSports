@@ -122,7 +122,10 @@ public class UserInfoController {
     @RequestMapping(value = "checkEmail/{email}",method = RequestMethod.GET)
     @ResponseBody
     public ReturnInfo checkEmail(@PathVariable String email) throws ServiceException {
-            userInfoService.checkEmailExistService(email);
+
+            if (userInfoService.checkEmailExistService(email)){
+                throw new ServiceException("” œ‰“—±ª◊¢≤·");
+            }
             String securityCode = CreateSafeCode.getRandCode();
             SendMailUtil sendMailUtil = new SendMailUtil(securityCode, email);
             sendMailUtil.start();

@@ -28,6 +28,8 @@
                 /Arena/userInfo/return.do=anon
                 /Arena/userInfo/loginCheck.do=anon
                 /Arena/userInfo/logout.do=anon
+                /Arena/userInfo/registerUser.do=anon
+                /Arena/userInfo/checkEmail/**.do=anon
                 # everything else requires authentication:
                 /** = authc
             </value>

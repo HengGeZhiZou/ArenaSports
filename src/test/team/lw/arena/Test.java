@@ -159,15 +159,14 @@ public class Test {
 
     @org.junit.Test
     public void sendMail() {
-        SendMailUtil sendMailUtil = new SendMailUtil("heelo", "iota.9star@foxmail.com");
+        SendMailUtil sendMailUtil = new SendMailUtil("heelo", "1018676477@qq.com");
         sendMailUtil.run();
     }
 
     @org.junit.Test
     public void checkEmailExist() {
         try {
-                userInfoService.checkEmailExistService("gjhgug");
-                System.out.println("” œ‰¥Ê‘⁄");
+            System.out.println(userInfoService.checkEmailExistService("dsadasdasd"));
         } catch (ServiceException e) {
             e.printStackTrace();
         }

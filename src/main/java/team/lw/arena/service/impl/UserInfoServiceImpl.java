@@ -61,7 +61,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         try {
             return userInfoDao.checkEmailExist(email);
         } catch (Exception e) {
-            throw new ServiceException("” œ‰“—æ≠¥Ê‘⁄");
+            return  false;
         }
     }
 
