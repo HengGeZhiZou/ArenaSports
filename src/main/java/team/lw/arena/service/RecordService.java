@@ -13,4 +13,6 @@ public interface RecordService {
 
     boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom);
 
+
+    Record findByRecordID(String rid);
 }

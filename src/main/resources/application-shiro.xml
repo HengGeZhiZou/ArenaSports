@@ -25,13 +25,14 @@
         <!--<property name="unauthorizedUrl" value="/unauthorized.jsp"/>-->
         <property name="filterChainDefinitions">
             <value>
-                /Arena/userInfo/return.do=anon
-                /Arena/userInfo/loginCheck.do=anon
-                /Arena/userInfo/logout.do=anon
-                /Arena/userInfo/registerUser.do=anon
-                /Arena/userInfo/checkEmail/**.do=anon
+                /**=anon
+                <!--/Arena/userInfo/return=anon-->
+                <!--/Arena/userInfo/loginCheck=anon-->
+                <!--/Arena/userInfo/logout=anon-->
+                <!--/Arena/userInfo/registerUser=anon-->
+                <!--/Arena/userInfo/checkEmail/**=anon-->
                 # everything else requires authentication:
-                /** = authc
+                <!--/** = authc-->
             </value>
         </property>
     </bean>

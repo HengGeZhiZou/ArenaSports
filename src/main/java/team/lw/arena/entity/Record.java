@@ -6,27 +6,44 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
-/**
- * Created by Administrator on 2017/3/2.
- */
 @Entity
 public class Record {
-    private int raceNumber;
     private Timestamp date;
     private String position;
     private String type;
-    private String id01;
-    private String id06;
-    private String id02;
-    private String id03;
-    private String id04;
-    private String id05;
 
-    public Record(Timestamp date, String position, String type, String id01, String id02, String id03, String id04, String id05, String id06) {
+//    返回的用户的id IMG Name
+    private String id01;
+    private String id01Img;
+    private String id01Name;
+    private String id02;
+    private String id02Img;
+    private String id02Name;
+    private String id03;
+    private String id03Img;
+    private String id03Name;
+    private String id04;
+    private String id04Img;
+    private String id04Name;
+    private String id05;
+    private String id05Img;
+    private String id05Name;
+    private String id06;
+    private String id06Img;
+    private String id06Name;
+
+//得到用户名和头像
+//    private String img;
+//    private String name;
+    private String recordID;
+
+
+
+    public Record(String recordID,Timestamp date, String position, String type, String id01, String id02, String id03, String id04, String id05, String id06) {
+        this.recordID=recordID;
         this.date = date;
         this.position = position;
         this.type = type;
-        this.raceNumber = raceNumber;
         this.id01 = id01;
         this.id06 = id06;
         this.id02 = id02;
@@ -47,6 +64,14 @@ public class Record {
     public void setDate(Timestamp date) {
         this.date = date;
     }
+
+//    public String getImg() {
+//        return img;
+//    }
+//
+//    public void setImg(String img) {
+//        this.img = img;
+//    }
 
     @Basic
     @Column(name = "_position")
@@ -69,13 +94,13 @@ public class Record {
     }
 
     @Id
-    @Column(name = "_race_number")
-    public int getRaceNumber() {
-        return raceNumber;
+    @Column(name = "_recordID")
+    public String getRecordID() {
+        return recordID;
     }
 
-    public void setRaceNumber(int raceNumber) {
-        this.raceNumber = raceNumber;
+    public void setRecordID(String recordID) {
+        this.recordID = recordID;
     }
 
     @Basic
@@ -139,19 +164,136 @@ public class Record {
     }
 
 
+    public String getId01Img() {
+        return id01Img;
+    }
+
+    public void setId01Img(String id01Img) {
+        this.id01Img = id01Img;
+    }
+
+    public String getId01Name() {
+        return id01Name;
+    }
+
+    public void setId01Name(String id01Name) {
+        this.id01Name = id01Name;
+    }
+
+    public String getId02Img() {
+        return id02Img;
+    }
+
+    public void setId02Img(String id02Img) {
+        this.id02Img = id02Img;
+    }
+
+    public String getId02Name() {
+        return id02Name;
+    }
+
+    public void setId02Name(String id02Name) {
+        this.id02Name = id02Name;
+    }
+
+    public String getId03Img() {
+        return id03Img;
+    }
+
+    public void setId03Img(String id03Img) {
+        this.id03Img = id03Img;
+    }
+
+    public String getId03Name() {
+        return id03Name;
+    }
+
+    public void setId03Name(String id03Name) {
+        this.id03Name = id03Name;
+    }
+
+    public String getId04Img() {
+        return id04Img;
+    }
+
+    public void setId04Img(String id04Img) {
+        this.id04Img = id04Img;
+    }
+
+    public String getId04Name() {
+        return id04Name;
+    }
+
+    public void setId04Name(String id04Name) {
+        this.id04Name = id04Name;
+    }
+
+    public String getId05Img() {
+        return id05Img;
+    }
+
+    public void setId05Img(String id05Img) {
+        this.id05Img = id05Img;
+    }
+
+    public String getId05Name() {
+        return id05Name;
+    }
+
+    public void setId05Name(String id05Name) {
+        this.id05Name = id05Name;
+    }
+
+    public String getId06Img() {
+        return id06Img;
+    }
+
+    public void setId06Img(String id06Img) {
+        this.id06Img = id06Img;
+    }
+
+    public String getId06Name() {
+        return id06Name;
+    }
+
+    public void setId06Name(String id06Name) {
+        this.id06Name = id06Name;
+    }
+
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+
     @Override
     public String toString() {
         return "Record{" +
                 "date=" + date +
                 ", position='" + position + '\'' +
                 ", type='" + type + '\'' +
-                ", raceNumber='" + raceNumber + '\'' +
                 ", id01='" + id01 + '\'' +
-                ", id06='" + id06 + '\'' +
+                ", id01Img='" + id01Img + '\'' +
+                ", id01Name='" + id01Name + '\'' +
                 ", id02='" + id02 + '\'' +
+                ", id02Img='" + id02Img + '\'' +
+                ", id02Name='" + id02Name + '\'' +
                 ", id03='" + id03 + '\'' +
+                ", id03Img='" + id03Img + '\'' +
+                ", id03Name='" + id03Name + '\'' +
                 ", id04='" + id04 + '\'' +
+                ", id04Img='" + id04Img + '\'' +
+                ", id04Name='" + id04Name + '\'' +
                 ", id05='" + id05 + '\'' +
+                ", id05Img='" + id05Img + '\'' +
+                ", id05Name='" + id05Name + '\'' +
+                ", id06='" + id06 + '\'' +
+                ", id06Img='" + id06Img + '\'' +
+                ", id06Name='" + id06Name + '\'' +
+//                ", img='" + img + '\'' +
+                ", recordID='" + recordID + '\'' +
                 '}';
     }
 }

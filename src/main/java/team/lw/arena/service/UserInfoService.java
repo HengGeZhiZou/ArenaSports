@@ -16,7 +16,7 @@ public interface UserInfoService {
 
         boolean checkEmailExistService(String email) throws ServiceException;  //检查邮箱是否存在
 
-        String registerService(UserLogin userLogin);  //注册  返回id
+        String registerService(String username,String password);  //注册  返回id
 
         String updatePasswordService(UserLogin userLogin) throws ServiceException;//修改密码 返回
 
@@ -25,6 +25,8 @@ public interface UserInfoService {
         String  addUserInfoService(UserInfo userInfo); //添加详细信息 返回id
 
         String updateUserInfoService(UserInfo userInfo);//修改信息 返回id
+
+        void addPortrait(String uid,String imaPath);  //增加用户头像
 
         String addToken(String email);//用户登陆时增加token
 

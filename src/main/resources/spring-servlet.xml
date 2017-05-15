@@ -5,17 +5,35 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射-->
+
+    <!--1 开启springmvc注解-->
     <mvc:annotation-driven/>
+    <!--2 静态资源处理-->
+    <mvc:default-servlet-handler/>
+    <!--3 扫描web相关的包-->
 
     <!-- 启动包扫描功能，以便注册带有@Controller、@dao、@repository、@Component等注解的类成为spring的bean -->
     <context:component-scan base-package="team.lw.arena.controller">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-    <!-- 对模型视图名称的解析，在请求时模型视图名称添加前后缀 -->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-    <!--<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>-->
-    <!--<property name="prefix" value="/"/>    &lt;!&ndash; 前缀 &ndash;&gt;-->
-    <!--<property name="suffix" value=".jsp"/>    &lt;!&ndash; 后缀 &ndash;&gt;-->
-    <!--</bean>-->
+
+    <!--4 web视图-->
+    <mvc:view-resolvers>
+        <mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" view-class="org.springframework.web.servlet.view.JstlView" />
+    </mvc:view-resolvers>
+
+    <!--5注入springfox 配置文件-->
+    <bean class="team.lw.arena.config.SwaggerConfig" />
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
+
+
+    <!-- SpringMVC上传文件时，需要配置MultipartResolver处理器 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8" />
+        <!-- 指定所上传文件的总大小,单位字节。注意maxUploadSize属性的限制不是针对单个文件，而是所有文件的容量之和 -->
+        <property name="maxUploadSize" value="10240000" />
+    </bean>
+
 </beans>

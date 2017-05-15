@@ -10,6 +10,7 @@ public class MobileUser {
     private String muUId;
     private BigDecimal muLongitud;
     private BigDecimal muLatitude;
+    private int distance;
     private int currPage;
 
     public int getCurrPage() {
@@ -27,6 +28,15 @@ public class MobileUser {
     }
 
     public MobileUser() {
+    }
+
+
+    public int getDistance() {
+        return distance;
+    }
+
+    public void setDistance(int distance) {
+        this.distance = distance;
     }
 
     @Id
@@ -79,5 +89,15 @@ public class MobileUser {
         result = 31 * result + (muLongitud != null ? muLongitud.hashCode() : 0);
         result = 31 * result + (muLatitude != null ? muLatitude.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "MobileUser{" +
+                "muUId='" + muUId + '\'' +
+                ", muLongitud=" + muLongitud +
+                ", muLatitude=" + muLatitude +
+                ", currPage=" + currPage +
+                '}';
     }
 }

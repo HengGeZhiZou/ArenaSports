@@ -5,7 +5,7 @@
 <hibernate-mapping>
 
     <class name="team.lw.arena.entity.Record" table="record" schema="project_db">
-        <id name="raceNumber" column="_race_number"/>
+        <id name="recordID" column="_recordId"/>
         <property name="date" column="_date"/>
         <property name="position" column="_position"/>
         <property name="type" column="_type"/>

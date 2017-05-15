@@ -3,22 +3,22 @@ package team.lw.arena.util;
 
 public class GetPositionUtil {
 
-    public static double[] getAround(double lat, double lon, int raidus) {
+    public static double[] getAround(double lat, double lon, int radius) {
 
         Double latitude = lat;
         Double longitude = lon;
 
         Double degree = (24901 * 1609) / 360.0;
-        double raidusMile = raidus;
+        double radiusMile = radius;
 
         Double dpmLat = 1 / degree;
-        Double radiusLat = dpmLat * raidusMile;
+        Double radiusLat = dpmLat * radiusMile;
         Double minLat = latitude - radiusLat;
         Double maxLat = latitude + radiusLat;
 
         Double mpdLng = degree * Math.cos(latitude * (Math.PI / 180));
         Double dpmLng = 1 / mpdLng;
-        Double radiusLng = dpmLng * raidusMile;
+        Double radiusLng = dpmLng * radiusMile;
         Double minLng = longitude - radiusLng;
         Double maxLng = longitude + radiusLng;
         return new double[] { minLat, minLng, maxLat, maxLng };

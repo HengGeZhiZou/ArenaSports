@@ -32,10 +32,27 @@ public class StateDaoImpl extends BaseDaoImpl<State> implements StateDao{
 
     @Override
     @SuppressWarnings("unchecked")
+    public List<Comment> findByPageComments(int begin, int pageSize, String Sid) {
+        DetachedCriteria detachedCriteria=DetachedCriteria.forClass(Comment.class);
+        detachedCriteria.add(Restrictions.eq("commentsId",Sid))
+                .addOrder(Order.desc("commentTime"));
+        return (List<Comment>) this.getHibernateTemplate().findByCriteria(detachedCriteria,begin,pageSize);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<State> findByPageState(int begin, int pageSize, String uid) {
         DetachedCriteria detachedCriteria=DetachedCriteria.forClass(State.class);
         detachedCriteria.add(Restrictions.eq("id",uid))
-        .addOrder(Order.desc("sId"));
+        .addOrder(Order.desc("date"));
         return  (List<State>) this.getHibernateTemplate().findByCriteria(detachedCriteria,begin,pageSize);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<State> getHotStates(int begin, int pageSize) {
+        DetachedCriteria detachedCriteria=DetachedCriteria.forClass(State.class);
+        detachedCriteria.addOrder(Order.desc("like"));
+        return (List<State>) this.getHibernateTemplate().findByCriteria(detachedCriteria,begin,pageSize);
     }
 }

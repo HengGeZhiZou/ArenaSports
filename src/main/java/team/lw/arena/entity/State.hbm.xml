@@ -8,6 +8,7 @@
         <id name="sId" column="_s_id"/>
         <property name="id" column="_id"/>
         <property name="text" column="_text"/>
+        <property name="browseTimes" column="times" />
         <property name="date" column="_date"/>
         <property name="photo" column="_photo"/>
         <property name="position" column="_position"/>

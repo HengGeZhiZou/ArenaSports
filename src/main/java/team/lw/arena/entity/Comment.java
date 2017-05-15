@@ -12,6 +12,8 @@ public class Comment {
     private String reviewerId;
     private String content;
     private Timestamp commentTime;
+    private String username;    //返回用户名
+    private String img;        //用户头像
     private int id;
 
     @Basic
@@ -64,6 +66,22 @@ public class Comment {
         this.id = id;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,5 +106,19 @@ public class Comment {
         result = 31 * result + (commentTime != null ? commentTime.hashCode() : 0);
         result = 31 * result + id;
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentsId='" + commentsId + '\'' +
+                ", reviewerId='" + reviewerId + '\'' +
+                ", content='" + content + '\'' +
+                ", commentTime=" + commentTime +
+                ", username='" + username + '\'' +
+                ", img='" + img + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

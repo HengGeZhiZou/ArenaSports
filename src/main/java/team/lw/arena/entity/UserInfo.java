@@ -19,6 +19,18 @@ public class UserInfo implements Serializable {
     private String phone;
     private int distance;
     private Timestamp addTime;
+    private Boolean playing;
+
+
+    @Basic
+    @Column(name = "_name")
+    public Boolean getPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(Boolean playing) {
+        this.playing = playing;
+    }
 
 
 //    ·µ»ØµÄ¾àÀë

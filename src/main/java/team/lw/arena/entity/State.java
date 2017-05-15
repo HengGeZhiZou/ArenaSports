@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
-/**
- * Created by Administrator on 2017/3/7.
- */
+
 @Entity
 public class State {
     private String sId;
@@ -19,6 +17,39 @@ public class State {
     private String position;
     private Integer like;
     private String commentsId;
+
+//    返回用户的信息
+    private String username;  //用户名
+    private int browseTimes;
+
+    @Basic
+    @Column(name = "times")
+    public int getBrowseTimes() {
+        return browseTimes;
+    }
+
+    public void setBrowseTimes(int browseTimes) {
+        this.browseTimes = browseTimes;
+    }
+
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    private String portrait;  //用户头像
+
+    public String getPortrait() {
+        return portrait;
+    }
+
+    public void setPortrait(String portrait) {
+        this.portrait = portrait;
+    }
 
     @Id
     @Column(name = "_s_id")
@@ -143,6 +174,9 @@ public class State {
                 ", position='" + position + '\'' +
                 ", like=" + like +
                 ", commentsId='" + commentsId + '\'' +
+                ", username='" + username + '\'' +
+                ", browseTimes=" + browseTimes +
+                ", portrait='" + portrait + '\'' +
                 '}';
     }
 }

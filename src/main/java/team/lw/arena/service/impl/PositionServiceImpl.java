@@ -14,6 +14,7 @@ import team.lw.arena.util.GetPositionUtil;
 
 import javax.annotation.Resource;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -24,8 +25,7 @@ public class PositionServiceImpl implements PositionService {
 
     private PositionDao positionDao;
     private UserInfoDao userInfoDao;
-    private List<UserInfo> userInfos;
-    private static final int pageSize = 5;
+    private static final int pageSize = 7;
 
     @Resource(name = "positionDaoImpl")
     public void setPositionDao(PositionDao positionDao) {
@@ -43,10 +43,11 @@ public class PositionServiceImpl implements PositionService {
             double[] around = GetPositionUtil.getAround(
                     mobileUser.getMuLatitude().doubleValue(),
                     mobileUser.getMuLongitud().doubleValue(),
-                    3000);
+                    mobileUser.getDistance());
             List<MobileUser> usersM = positionDao.getAroundPeople(
                     (mobileUser.getCurrPage() - 1) * pageSize, pageSize,
                     around[0], around[1], around[2], around[3]);
+             List<UserInfo> userInfos=new ArrayList<UserInfo>();
             for (MobileUser user : usersM) {
                 if (user.getMuUId().equals(mobileUser.getMuUId())) continue;
                 UserInfo userInfo = userInfoDao.findUserInfo(user.getMuUId());
@@ -60,6 +61,7 @@ public class PositionServiceImpl implements PositionService {
             userInfos = ComparatorDistance.getComparatorDistance(userInfos);
             return userInfos;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new ServiceException("GetAroundPeople Fail");
         }
     }

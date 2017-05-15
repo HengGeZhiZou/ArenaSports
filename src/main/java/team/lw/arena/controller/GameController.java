@@ -1,5 +1,6 @@
 package team.lw.arena.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import team.lw.arena.entity.Record;
@@ -16,6 +17,7 @@ import static team.lw.arena.util.ResultCode.REQUEST_SUCCESS;
 import static team.lw.arena.util.ResultCode.REQUEST_SUCCESS_MSG;
 
 @Controller
+@Api(value = "/Arena/game/*", description = "比赛房间进行操作")
 @RequestMapping(value = "/Arena/game/*")
 public class GameController {
     @Resource(name = "gameServiceImpl")
@@ -39,15 +41,11 @@ public class GameController {
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "inviteOthers", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "inviteOthers/{ownerID}/{inviteeID}", method = RequestMethod.POST, produces = "application/json")
     @ResponseBody
-    public ReturnInfo inviteOthers(@RequestBody SixPeopleRoom sixPeopleRoom) throws ServiceException {
-        try {
-            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, gameService.inviteOthers(sixPeopleRoom));
+    public ReturnInfo inviteOthers(@PathVariable String ownerID,@PathVariable String inviteeID) throws ServiceException {
+            returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, gameService.inviteOthers(ownerID, inviteeID));
             return returnInfo;
-        } catch (Exception e) {
-            throw new ServiceException("邀请玩家失败");
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -73,14 +71,23 @@ public class GameController {
     }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "findRecord/{uid}/{currPage}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "findAllRecord/{uid}/{currPage}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ReturnInfo findRecord(@PathVariable String uid, @PathVariable int currPage) throws ServiceException {
+    public ReturnInfo findAllRecord(@PathVariable String uid, @PathVariable int currPage) throws ServiceException {
         try {
             returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, recordService.findByPage(currPage, uid));
             return returnInfo;
         } catch (Exception e) {
             throw new ServiceException("查询战绩失败");
         }
+    }
+
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "findRecord/{rid}",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnInfo findRecord(@PathVariable String rid) throws ServiceException{
+        returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG,recordService.findByRecordID(rid));
+    return returnInfo;
     }
 }

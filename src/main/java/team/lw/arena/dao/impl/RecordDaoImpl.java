@@ -15,6 +15,14 @@ import java.util.List;
 public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao {
 
     @Override
+    public String getMaxRecordID(String  ownerID) {
+        String hql="select max(recordID) from Record where id01=?";
+        List<String> list= (List<String>) this.getHibernateTemplate().find(hql,ownerID);
+        if (list.get(0) != null) return list.get(0);
+        return ownerID+"0000";
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Record> findByPage(int begin, int pageSize, String uid) {
         DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Record.class);

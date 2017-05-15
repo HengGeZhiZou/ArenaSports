@@ -66,7 +66,10 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public String registerService(UserLogin userLogin) {
+    public String registerService(String username,String password) {
+        UserLogin userLogin=new UserLogin();
+        userLogin.setEmail(username);
+        userLogin.setPassword(password);
         userLogin.setId(CreateNewUserId.getNewUserId(userInfoDao.getMaxId()));
         userLogin.setLastTime(new java.sql.Timestamp(System.currentTimeMillis()));
         userLogin.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -99,6 +102,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public String addUserInfoService(UserInfo userInfo) {
         userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        userInfo.setPlaying(false);
         userInfoDao.addUserInfo(userInfo);
         return userInfo.getId();
     }
@@ -106,8 +110,16 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public String updateUserInfoService(UserInfo userInfo) {
         userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
+        userInfo.setPlaying(false);
         userInfoDao.updateUserInfo(userInfo);
         return userInfo.getId();
+    }
+
+    @Override
+    public void addPortrait(String uid,String imgPath) {
+        UserInfo userInfo=userInfoDao.findUserInfo(uid);
+        userInfo.setPortrait(imgPath);
+        userInfoDao.updateUserInfo(userInfo);
     }
 
     @Override

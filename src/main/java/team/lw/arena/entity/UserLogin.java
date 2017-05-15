@@ -1,5 +1,7 @@
 package team.lw.arena.entity;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -9,7 +11,9 @@ import java.sql.Timestamp;
 @Table(name = "user_login", schema = "project_db")
 public class UserLogin implements Serializable {
     private String id;
+    @ApiModelProperty(value = "用户邮箱")
     private String email;
+    @ApiModelProperty(value = "用户密码")
     private String password;
     private Timestamp addTime;
     private Timestamp lastTime;

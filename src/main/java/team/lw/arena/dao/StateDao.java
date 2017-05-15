@@ -13,5 +13,10 @@ public interface StateDao extends BaseDao<State> {
 
     void saveComment(Comment comment);   //保存每一条评论
 
-    List<State> findByPageState(int begin,int pageSize,String sid);
+    List<Comment> findByPageComments(int begin,int pageSize,String Sid); // 获取sid动态的评论
+
+    List<State> findByPageState(int begin,int pageSize,String sid); //获取该用户的所有动态
+
+    List<State> getHotStates(int begin,int pageSize);   //获取热门动态
+
 }

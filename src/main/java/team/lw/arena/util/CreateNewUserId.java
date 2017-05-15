@@ -26,9 +26,10 @@ public class CreateNewUserId {
         }
     }
 
-    public static String crateStateId(String stateId) {
-        String first = stateId.substring(0, 10);
-        String count = stateId.substring(10);
+//    创建用户动态ID  比赛记录id
+    public static String crateStateId(String stateOrRecordId) {
+        String first = stateOrRecordId.substring(0, 10);
+        String count = stateOrRecordId.substring(10);
         int i = Integer.parseInt(count);
         i++;
         String nid=String.valueOf(i);

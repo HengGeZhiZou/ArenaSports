@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 import team.lw.arena.dao.GameDao;
 import team.lw.arena.dao.StateDao;
 import team.lw.arena.dao.TestDao;
@@ -19,12 +20,16 @@ import team.lw.arena.util.*;
 
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+import static team.lw.arena.util.CheckExcelFileTypeUtil.getFileType;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
+@WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class Test {
     private ClassPathXmlApplicationContext ctx;
@@ -76,7 +81,7 @@ public class Test {
         userLogin.setEmail("qweroooo");
         userLogin.setPassword("ssss");
         try {
-            System.out.println(userInfoService.registerService(userLogin));
+//            System.out.println(userInfoService.registerService(userLogin));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,13 +91,14 @@ public class Test {
     public void test() {
         UserInfo userInfo = new UserInfo();
         userInfo.setId("1701000003");
-        userInfo.setName("流论旁生");
+        userInfo.setName("李玉刚");
         userInfo.setPortrait("aaa");
         userInfo.setSex("男");
+        userInfo.setPlaying(true);
         userInfo.setAge("11");
         userInfo.setHeight("1.80");
         userInfo.setWeight("90");
-        userInfo.setProfiles("wwwwwwwwwwwwwwwwww");
+        userInfo.setProfiles("我爱你");
         userInfo.setPhone("1232kksds");
         try {
             System.out.println(userInfoService.updateUserInfoService(userInfo));
@@ -208,7 +214,7 @@ public class Test {
     @org.junit.Test
     public void testRecord() {
 
-        List<Record> lists = recordService.findByPage(2,"1702000001");
+        List<Record> lists = recordService.findByPage(1,"1704000003");
         for (Record record : lists) {
             System.out.println(record.toString());
         }
@@ -223,18 +229,20 @@ public class Test {
         List<UserInfo> lists= null;
         MobileUser mobileUser=new MobileUser();
         mobileUser.setMuUId("1701000001");
-        mobileUser.setCurrPage(2);
-        mobileUser.setMuLatitude(new BigDecimal(13.212313));
-        mobileUser.setMuLongitud(new BigDecimal(29.221231));
+        mobileUser.setCurrPage(1);
+        mobileUser.setDistance(1000000000);
+        mobileUser.setMuLatitude(new BigDecimal(13.212899));
+        mobileUser.setMuLongitud(new BigDecimal(29.221234));
         try {
             lists = positionService.getAroundPeople(mobileUser);
             System.out.println(lists.size());
+            for (UserInfo userInfo:lists){
+                System.out.println(userInfo.toString());
+            }
         } catch (ServiceException e) {
             e.printStackTrace();
         }
-        for (UserInfo userInfo:lists){
-            System.out.println(userInfo.toString());
-        }
+
     }
 
     @org.junit.Test
@@ -251,30 +259,31 @@ public class Test {
 
     @org.junit.Test
     public void createRoom(){
-            System.out.println(gameService.CreateHouse("1701000004"));
+        try {
+            System.out.println(gameService.CreateHouse("1701000001"));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
     @org.junit.Test
     public void inviteOthers(){
-        SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
-        sixPeopleRoom.setCharacter01("1701000004");
-        sixPeopleRoom.setCharacter02("1702000001");
-        sixPeopleRoom.setCharacter03("1701000004");
-        sixPeopleRoom.setCharacter04("1701000003");
-        sixPeopleRoom.setCharacter05("1702000004");
-        sixPeopleRoom.setCharacter06("1702000003");
-        System.out.println(gameService.inviteOthers(sixPeopleRoom));
+        try {
+            System.out.println(gameService.inviteOthers("1701000001","1704000004"));
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
     @org.junit.Test
-    public void overGame(){
-        gameService.endGame("1701000004");
+    public void overGame() throws ServiceException {
+        gameService.endGame("1704000003");
     }
 
     @org.junit.Test
     public void startGame(){
         try {
-            gameService.startGame("1701000001");
+            gameService.startGame("1704000003");
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -286,7 +295,7 @@ public class Test {
 //        System.out.println(CreateNewUserId.crateStateId("17010000010001"));
         State state=new State();
         state.setId("1701000001");
-        state.setText("今天天气真好，开心");
+        state.setText("今天dasdmaishdjaisd");
 //        state.setDate(new Timestamp(System.currentTimeMillis()));
 //        state.setPhoto("http://file.koolearn.com/20170307/14888803845500.jpg");
 //        state.setPosition("中国");
@@ -306,7 +315,7 @@ public class Test {
         Comment comment=new Comment();
         comment.setCommentsId("17010000020002");
 //        comment.setCommentTime(new Timestamp(System.currentTimeMillis()));
-        comment.setContent("你真是");
+        comment.setContent("dsadsaaaaaaaaaaaa");
         comment.setReviewerId("1701000005");
         stateService.addComment(comment);
     }
@@ -319,9 +328,61 @@ public class Test {
 
     @org.junit.Test
     public void findAllState(){
-        List<State> states=stateService.findAllState(2,"1701000002");
+        List<State> states=stateService.findAllState(1,"1704000003");
         for(State state:states){
             System.out.println(state);
         }
+    }
+
+    @org.junit.Test
+    public void findAllComments(){
+       List<Comment> comments=stateService.getAllComment(1,"17010000020001");
+       for (Comment comment:comments){
+           System.out.println(comment);
+       }
+    }
+
+    @org.junit.Test
+    public void getHotStates(){
+        List<State> states=stateService.getHotStates(1);
+        for (State state:states){
+            System.out.println(state);
+        }
+    }
+
+    @org.junit.Test
+    public void addPortrait(){
+        userInfoService.addPortrait("1701000001","1dsad/asdasd/sdasdasdaedsdaedasdasdwda.jpg");
+    }
+
+    @org.junit.Test
+    public void testFileType(){
+        File file=new File("D:\\pic\\0a0f8c8547f3498eaee0f94494a1edca.null");
+         String fileType = getFileType(file);
+        System.out.println(fileType);
+    }
+
+    @org.junit.Test
+    public void testAddStates(){
+        stateService.addPics("17040000030093","" +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg," +
+                "http://192.168.0.16:8080/pic/6e2cca9b7be64191bfafe521f6efe4b5.jpg,"
+          );
+    }
+
+
+    @org.junit.Test
+    public void testFindRecord(){
+
+      Record record=  recordService.findByRecordID("17040000030001");
+        System.out.println(record);
     }
 }

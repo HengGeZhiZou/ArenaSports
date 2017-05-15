@@ -8,15 +8,18 @@ import java.util.Properties;
 public class PropertiesUtil {
     private static Properties propertiesA = null;
     private static Properties propertiesC = null;
-
+    private static Properties propertiesRequest=null;
     static {
         try {
             propertiesA=new Properties();
             propertiesC=new Properties();
+            propertiesRequest=new Properties();
             propertiesA.load(new FileInputStream(
                     new File(PropertiesUtil.class.getClassLoader().getResource("mailAccount.properties").getPath())));
             propertiesC.load(new FileInputStream(
                     new File(PropertiesUtil.class.getClassLoader().getResource("mailConnect.properties").getPath())));
+            propertiesRequest.load(new FileInputStream(
+                    new File(PropertiesUtil.class.getClassLoader().getResource("requestAddress.properties").getPath())));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,5 +43,13 @@ public class PropertiesUtil {
 
     public static Properties getPropertiesConnect() {
         return propertiesC;
+    }
+
+    public static String getRequestPropertiesAddress(){
+        return propertiesRequest.getProperty("request.address");
+    }
+
+    public static String getRequestPropertiesSaveAddress(){
+        return propertiesRequest.getProperty("request.saveAddress");
     }
 }
