@@ -21,6 +21,12 @@ public class UserInfo implements Serializable {
     private Timestamp addTime;
     private Boolean playing;
 
+    public UserInfo() {
+    }
+
+    public UserInfo(String id) {
+        this.id = id;
+    }
 
     @Basic
     @Column(name = "_name")

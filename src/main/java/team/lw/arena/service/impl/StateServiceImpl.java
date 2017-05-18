@@ -71,7 +71,7 @@ public class StateServiceImpl implements StateService {
        for (int i=0;i<lists.size();i++){
            UserInfo user=userInfo.findUserInfo(lists.get(i).getReviewerId());
            lists.get(i).setUsername(user.getName());
-           lists.get(i).setImg(user.getProfiles());
+           lists.get(i).setImg(user.getPortrait());
        }
         return lists;
     }

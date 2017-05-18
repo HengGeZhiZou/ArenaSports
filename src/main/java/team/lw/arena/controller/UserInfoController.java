@@ -122,11 +122,11 @@ public class UserInfoController {
             response = ReturnInfo.class
     )
     @ResponseBody
-    public ReturnInfo logout(@RequestBody UserLogin userLogin) {
+    public ReturnInfo logout() {
         Subject subject = SecurityUtils.getSubject();
         if (subject.isAuthenticated()) {
-            subject.logout(); // session 会销毁，在SessionListener监听session销毁，清理权限缓存
-            userInfoService.deleteToken(userLogin.getEmail());
+            subject.logout(); //  session 会销毁，在SessionListener监听session销毁，清理权限缓存
+//            userInfoService.deleteToken(userLogin.getEmail());
             returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG);
         }
         return returnInfo;
@@ -222,6 +222,7 @@ public class UserInfoController {
     @ResponseBody
     public ReturnInfo updateUserInfo(@RequestBody UserInfo userInfo) throws ServiceException {
         try {
+            userInfo.setPlaying(false);
             returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, userInfoService.updateUserInfoService(userInfo));
             return returnInfo;
         } catch (Exception e) {

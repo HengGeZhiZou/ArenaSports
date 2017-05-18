@@ -25,7 +25,7 @@ public class PositionServiceImpl implements PositionService {
 
     private PositionDao positionDao;
     private UserInfoDao userInfoDao;
-    private static final int pageSize = 7;
+    private static final int pageSize = 16;
 
     @Resource(name = "positionDaoImpl")
     public void setPositionDao(PositionDao positionDao) {

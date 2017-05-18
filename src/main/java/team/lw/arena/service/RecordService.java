@@ -10,9 +10,10 @@ public interface RecordService {
 
     List<Record> findByPage(Integer currPage,String uid);
 
+    List<Record> currRecord(int currPage);
 
-    boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom);
-
+    boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom,String district,String type);
 
     Record findByRecordID(String rid);
+
 }

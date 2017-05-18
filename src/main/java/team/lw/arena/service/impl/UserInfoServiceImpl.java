@@ -110,7 +110,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public String updateUserInfoService(UserInfo userInfo) {
         userInfo.setAddTime(new java.sql.Timestamp(System.currentTimeMillis()));
-        userInfo.setPlaying(false);
         userInfoDao.updateUserInfo(userInfo);
         return userInfo.getId();
     }

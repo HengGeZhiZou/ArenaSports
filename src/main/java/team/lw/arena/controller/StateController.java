@@ -18,11 +18,9 @@ import team.lw.arena.util.CheckExcelFileTypeUtil;
 import team.lw.arena.util.PropertiesUtil;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import static team.lw.arena.util.ResultCode.REQUEST_SUCCESS;
@@ -66,7 +64,7 @@ public class StateController {
    try {
        String paths="";
        String front= PropertiesUtil.getRequestPropertiesAddress();
-       String path="";
+       String path;
        for (MultipartFile mf : file) {
            if(!mf.isEmpty()){
                //生成uuid作为文件名称

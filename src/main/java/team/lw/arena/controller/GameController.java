@@ -48,21 +48,21 @@ public class GameController {
             return returnInfo;
     }
 
-    @SuppressWarnings("unchecked")
-    @RequestMapping(value = "startGame/{ownerID}",method = RequestMethod.GET,produces = "application/json")
-    @ResponseBody
-    public ReturnInfo startGame(@PathVariable String ownerID)throws ServiceException{
-            gameService.startGame(ownerID);
-            returnInfo.setInfo(REQUEST_SUCCESS,REQUEST_SUCCESS_MSG);
-            return returnInfo;
-    }
+//    @SuppressWarnings("unchecked")
+//    @RequestMapping(value = "startGame/{ownerID}",method = RequestMethod.GET,produces = "application/json")
+//    @ResponseBody
+//    public ReturnInfo startGame(@PathVariable String ownerID)throws ServiceException{
+//            gameService.startGame(ownerID);
+//            returnInfo.setInfo(REQUEST_SUCCESS,REQUEST_SUCCESS_MSG);
+//            return returnInfo;
+//    }
 
     @SuppressWarnings("unchecked")
-    @RequestMapping(value = "endGame/{ownerID}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "startGame/{ownerID}/{type}/{district}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public ReturnInfo endGame(@PathVariable String ownerID) throws ServiceException {
+    public ReturnInfo endGame(@PathVariable String ownerID,@PathVariable String type,@PathVariable String district) throws ServiceException {
         try {
-            gameService.endGame(ownerID);
+            gameService.start(ownerID,type,district);
             returnInfo.setInfo(REQUEST_SUCCESS, REQUEST_SUCCESS_MSG, "比赛结束");
             return returnInfo;
         } catch (Exception e) {
@@ -79,6 +79,18 @@ public class GameController {
             return returnInfo;
         } catch (Exception e) {
             throw new ServiceException("查询战绩失败");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @RequestMapping(value = "findCurrRecord/{currPage}",method = RequestMethod.GET)
+    @ResponseBody
+    public ReturnInfo findCurrRecord(@PathVariable int currPage) throws ServiceException {
+        try {
+            returnInfo.setInfo(REQUEST_SUCCESS,REQUEST_SUCCESS_MSG,recordService.currRecord(currPage));
+            return returnInfo;
+        } catch (Exception e){
+            throw new ServiceException("查找热门比赛失败");
         }
     }
 

@@ -26,6 +26,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /**=anon
+                <!--/-->
                 <!--/Arena/userInfo/return=anon-->
                 <!--/Arena/userInfo/loginCheck=anon-->
                 <!--/Arena/userInfo/logout=anon-->

@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 import static team.lw.arena.util.CheckExcelFileTypeUtil.getFileType;
@@ -90,16 +91,16 @@ public class Test {
     @org.junit.Test
     public void test() {
         UserInfo userInfo = new UserInfo();
-        userInfo.setId("1701000003");
-        userInfo.setName("李玉刚");
-        userInfo.setPortrait("aaa");
+        userInfo.setId("1705000003");
+        userInfo.setName("恒哥直走");
+//        userInfo.setPortrait("aaa");
         userInfo.setSex("男");
         userInfo.setPlaying(true);
         userInfo.setAge("11");
         userInfo.setHeight("1.80");
         userInfo.setWeight("90");
-        userInfo.setProfiles("我爱你");
-        userInfo.setPhone("1232kksds");
+        userInfo.setProfiles("热爱运动热爱生活");
+        userInfo.setPhone("18328439623");
         try {
             System.out.println(userInfoService.updateUserInfoService(userInfo));
         } catch (Exception e) {
@@ -155,7 +156,7 @@ public class Test {
     public void testUpdatePassword() {
         UserLogin userLogin = new UserLogin();
         userLogin.setId("1702000001");
-        userLogin.setPassword("mai");
+        userLogin.setPassword("mi");
         try {
             userInfoService.updatePasswordService(userLogin);
         } catch (ServiceException e) {
@@ -260,7 +261,7 @@ public class Test {
     @org.junit.Test
     public void createRoom(){
         try {
-            System.out.println(gameService.CreateHouse("1701000001"));
+            System.out.println(gameService.CreateHouse("1705000001"));
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -269,7 +270,7 @@ public class Test {
     @org.junit.Test
     public void inviteOthers(){
         try {
-            System.out.println(gameService.inviteOthers("1701000001","1704000004"));
+            System.out.println(gameService.inviteOthers("1705000001","1705000004"));
         } catch (ServiceException e) {
             e.printStackTrace();
         }
@@ -277,16 +278,16 @@ public class Test {
 
     @org.junit.Test
     public void overGame() throws ServiceException {
-        gameService.endGame("1704000003");
+//        gameService.endGame("1704000003");
     }
 
     @org.junit.Test
     public void startGame(){
-        try {
-            gameService.startGame("1704000003");
-        } catch (ServiceException e) {
-            e.printStackTrace();
-        }
+//        try {
+////            gameService.startGame("1704000003");
+//        } catch (ServiceException e) {
+//            e.printStackTrace();
+//        }
     }
 
 
@@ -382,7 +383,48 @@ public class Test {
     @org.junit.Test
     public void testFindRecord(){
 
-      Record record=  recordService.findByRecordID("17040000030001");
+      List<Record> list=recordService.findByPage(1,"1705000004");
+      for (Record record:list){
+          System.out.println(record);
+      }
+    }
+
+    @org.junit.Test
+    public  void  testGetAllUser(){
+        SixPeopleRoom sixPeopleRoom=new SixPeopleRoom();
+        sixPeopleRoom.setCharacter01("qwertty");
+        sixPeopleRoom.setCharacter02("danudsd");
+        sixPeopleRoom.setCharacter03("dasdsdas");
+        sixPeopleRoom.setCharacter04("lydsd");
+        sixPeopleRoom.setCharacter05("123123123");
+        sixPeopleRoom.setCharacter06("powqeqw");
+        List<UserInfo> lists=InviteUser.getAllUser(sixPeopleRoom);
+        for (UserInfo userInfo:lists){
+            System.out.println(userInfo.getId());
+        }
+    }
+
+    @org.junit.Test
+    public void testStart() throws ServiceException {
+        gameService.start("1705000001","足球","四川省成都市温江区");
+    }
+
+
+    @org.junit.Test
+    public void testCurrRecord(){
+       List<Record> list= recordService.currRecord(1);
+    for (Record record:list){
         System.out.println(record);
+    }
+    }
+    @org.junit.Test
+    public void testqqq(){
+        String s = "adgsh,jkhjkh,,gh";
+        String[] a = s.split(",");
+        List<String> strings = Arrays.asList(a);
+        for (String s1 : a) {
+            System.out.println("--:"+s1);
+        }
+        System.out.println(a.length+"---"+strings.size());
     }
 }

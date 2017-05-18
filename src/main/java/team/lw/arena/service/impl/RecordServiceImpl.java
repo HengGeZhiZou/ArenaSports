@@ -31,14 +31,14 @@ public class RecordServiceImpl implements RecordService {
     private static int pageSize = 10;
 
     @Override
-    public boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom) {
+    public boolean addSixRoomRecord(SixPeopleRoom sixPeopleRoom,String district,String type) {
 
         String recordID= CreateNewUserId.crateStateId(recordDao.getMaxRecordID(sixPeopleRoom.getCharacter01()));
         recordDao.save(new Record(
                 recordID,
                 new Timestamp(System.currentTimeMillis()),
-                "ÖÐ¹ú",
-                "ÀºÇò",
+                district,
+                type,
                 sixPeopleRoom.getCharacter01(),
                 sixPeopleRoom.getCharacter02(),
                 sixPeopleRoom.getCharacter03(),
@@ -86,8 +86,18 @@ public class RecordServiceImpl implements RecordService {
 
     @Override
     public List<Record> findByPage(Integer currPage,String uid) {
-
         List<Record> list = recordDao.findByPage(pageSize*(currPage-1), pageSize,uid);
+        return getRecordInfo(list);
+    }
+
+    @Override
+    public List<Record> currRecord(int currPage) {
+        List<Record> list = recordDao.findCurrRecord(pageSize*(currPage-1), pageSize);
+        return getRecordInfo(list);
+    }
+
+
+    private List<Record> getRecordInfo(List<Record> list){
         for (int j=0;j<list.size();j++){
             for (int i=1;i<=6;i++){
                 switch (i){
@@ -95,32 +105,44 @@ public class RecordServiceImpl implements RecordService {
                         UserInfo userInfo1=userInfoDao.findUserInfo(list.get(j).getId01());
                         list.get(j).setId01Img(userInfo1.getPortrait());
                         list.get(j).setId01Name(userInfo1.getName());
+                        break;
                     case 2:
                         UserInfo userInfo2=userInfoDao.findUserInfo(list.get(j).getId02());
                         list.get(j).setId02Img(userInfo2.getPortrait());
                         list.get(j).setId02Name(userInfo2.getName());
+                        break;
                     case 3:
-                        UserInfo userInfo3=userInfoDao.findUserInfo(list.get(j).getId03());
-                        list.get(j).setId03Img(userInfo3.getPortrait());
-                        list.get(j).setId03Name(userInfo3.getName());
+                        if (list.get(j).getId03()!=null){
+                            UserInfo userInfo3=userInfoDao.findUserInfo(list.get(j).getId03());
+                            list.get(j).setId03Img(userInfo3.getPortrait());
+                            list.get(j).setId03Name(userInfo3.getName());
+                        }
+                       break;
                     case 4:
-                        UserInfo userInfo4=userInfoDao.findUserInfo(list.get(j).getId04());
-                        list.get(j).setId04Img(userInfo4.getPortrait());
-                        list.get(j).setId04Name(userInfo4.getName());
+                        if (list.get(j).getId04()!=null){
+                            UserInfo userInfo4=userInfoDao.findUserInfo(list.get(j).getId04());
+                            list.get(j).setId04Img(userInfo4.getPortrait());
+                            list.get(j).setId04Name(userInfo4.getName());
+                        }
+                        break;
                     case 5:
-                        UserInfo userInfo5=userInfoDao.findUserInfo(list.get(j).getId05());
-                        list.get(j).setId05Img(userInfo5.getPortrait());
-                        list.get(j).setId05Name(userInfo5.getName());
+                        if (list.get(j).getId05()!=null){
+                            UserInfo userInfo5=userInfoDao.findUserInfo(list.get(j).getId05());
+                            list.get(j).setId05Img(userInfo5.getPortrait());
+                            list.get(j).setId05Name(userInfo5.getName());
+                        }
+                        break;
                     case 6:
-                        UserInfo userInfo6=userInfoDao.findUserInfo(list.get(j).getId06());
-                        list.get(j).setId06Img(userInfo6.getPortrait());
-                        list.get(j).setId06Name(userInfo6.getName());
+                        if (list.get(j).getId06()!=null){
+                            UserInfo userInfo6=userInfoDao.findUserInfo(list.get(j).getId06());
+                            list.get(j).setId06Img(userInfo6.getPortrait());
+                            list.get(j).setId06Name(userInfo6.getName());
+                        }
+                        break;
                 }
             }
         }
-
-
-
         return list;
     }
+
 }

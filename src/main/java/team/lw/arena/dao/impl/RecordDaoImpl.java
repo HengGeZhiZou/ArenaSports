@@ -15,6 +15,7 @@ import java.util.List;
 public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao {
 
     @Override
+    @SuppressWarnings("unchecked")
     public String getMaxRecordID(String  ownerID) {
         String hql="select max(recordID) from Record where id01=?";
         List<String> list= (List<String>) this.getHibernateTemplate().find(hql,ownerID);
@@ -35,6 +36,14 @@ public class RecordDaoImpl extends BaseDaoImpl<Record> implements RecordDao {
                 Restrictions.eq("id06", uid)
         ))
                 .addOrder(Order.desc("date"));
+        return (List<Record>) this.getHibernateTemplate().findByCriteria(detachedCriteria, begin, pageSize);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Record> findCurrRecord(int begin, int pageSize) {
+        DetachedCriteria detachedCriteria = DetachedCriteria.forClass(Record.class);
+        detachedCriteria.addOrder(Order.desc("date"));
         return (List<Record>) this.getHibernateTemplate().findByCriteria(detachedCriteria, begin, pageSize);
     }
 
